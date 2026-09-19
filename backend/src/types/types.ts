@@ -8,7 +8,7 @@ export type StoredMsg = {
 
 export type CLientMsg =
   | { type: "join"; name: string }
-  | { type: "chat"; text: string }
+  | { type: "chat"; room: string; text: string }
   | { type: "ping" }
   | { type: "joinRoom"; room: string }
   | { type: "leaveRoom"; room: string }

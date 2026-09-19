@@ -58,7 +58,7 @@ export function parsedMsg(raw: string): CLientMsg | null {
     if (typeof m.text !== "string") return null;
     const text = m.text.trim().slice(0, MAX_TEXT_LENGTH);
     if (!text) return null;
-    return { type: m.type, text };
+    return { type: m.type, room, text };
   }
   return null;
 }
