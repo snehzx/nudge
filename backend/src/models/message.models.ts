@@ -17,8 +17,10 @@ const msgSchema = new Schema(
     room: {
       type: String,
       default: "general",
-      index: true,
     },
   },
   { timestamps: true },
 );
+msgSchema.index({ room: 1, createdAt: -1 });
+
+export const Message = mongoose.model("Message", msgSchema);

@@ -38,3 +38,40 @@ export function addToRoom(room: string, ws: WebSocket, state: ClientState) {
   rooms.get(room)!.add(ws); // both sides updated together
   state.rooms.add(room);
 }
+
+export function removeFromRoom(
+  room: string,
+  ws: WebSocket,
+  state: ClientState,
+) {
+  const members = rooms.get(room);
+
+  if (members) {
+    members.delete(ws);
+  }
+  //this default checks make sure default room dont get deleted even if there are no members
+  if (members!.size === 0 && !DEFAULT_ROOMS.includes(room)) {
+    rooms.delete(room);
+    console.log("room deleted");
+  }
+  state.rooms.delete(room); //it is necessary to from from state too cuz it holds the name and wont go unless updated
+}
+
+export function roomList() {
+  return [...rooms.entries()].map(([name, members]) => ({
+    name,
+    members: members.size,
+  }));
+}
+
+export function onlineCount() {
+  let n = 0;
+  for (const s of clients.values()) if (s.name) n++;
+  return n;
+}
+
+export function isNameTaken(name: string) {
+  return [...clients.values()].some(
+    (s) => s.name?.toLowerCase() === name.toLowerCase(),
+  );
+}

@@ -17,9 +17,16 @@ export type CLientMsg =
 export type ServerMessage =
   | { type: "welcome"; id: string }
   | { type: "joined"; name: string; online: number }
-  | { type: "history"; messages: StoredMsg[] }
-  | { type: "system"; text: string }
-  | { type: "chat"; id: string; from: string; text: string; time: number }
+  | { type: "history"; room: string; messages: StoredMsg[] }
+  | { type: "system"; room: string; text: string }
+  | {
+      type: "chat";
+      id: string;
+      room: string;
+      from: string;
+      text: string;
+      time: number;
+    }
   | { type: "error"; message: string }
   | { type: "pong"; time: number }
   | { type: "rooms"; rooms: { name: string; members: number }[] }
