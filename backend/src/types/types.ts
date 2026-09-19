@@ -27,7 +27,7 @@ export type ServerMessage =
       text: string;
       time: number;
     }
-  | { type: "error"; message: string }
+  | { type: "error"; message: string; code?: string }
   | { type: "pong"; time: number }
   | { type: "rooms"; rooms: { name: string; members: number }[] }
   | { type: "roomJoined"; room: string; members: number }
@@ -37,4 +37,7 @@ export type ClientState = {
   id: string;
   name: string | null;
   rooms: Set<string>;
+  isAlive: boolean;
+  tokens: number;
+  lastRefill: number;
 };
