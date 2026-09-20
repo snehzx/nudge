@@ -5,17 +5,12 @@ export const api = axios.create({
   withCredentials: true,
 });
 
-let accessToken: string | null = null;
-
-export const setAccessToken = (t: string | null) => {
-  accessToken = t;
-};
-
 //attach the token to every outgoing request
 //this fxn axios runs on every req before sending it -like a middleware for client side
 api.interceptors.request.use((config) => {
   //config is the req about to go out -url , method , headers ,body
-  if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
+  const token = useAuthStore.getState().token; // read from the store
+  if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 
@@ -36,7 +31,7 @@ api.interceptors.response.use(
       .post("/auth/refresh")
       .then((r) => {
         const t = r.data.data.accessToken; //r.data-axios parsed res body , data-api envelope
-        setAccessToken(t);
+        useAuthStore.getState().setToken(t); //write to the store
         return t;
       })
       .finally(() => (refreshing = null));
@@ -45,8 +40,10 @@ api.interceptors.response.use(
       await refreshing;
       return api(original); //retry the original request
     } catch (error) {
-      setAccessToken(null);
+      useAuthStore.getState().clear();
       return Promise.reject(error);
     }
   },
 );
+
+import { useAuthStore } from "../store/authStore.ts";
