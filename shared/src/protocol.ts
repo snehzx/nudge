@@ -12,6 +12,8 @@ export type CLientMsg =
   | { type: "leaveRoom"; room: string }
   | { type: "listRooms" };
 
+export type RoomInfo = { name: string; members: number }[];
+
 export type ServerMessage =
   | { type: "welcome"; userId: string; username: string }
   | { type: "history"; room: string; messages: StoredMsg[] }
@@ -25,7 +27,7 @@ export type ServerMessage =
       time: number;
     }
   | { type: "error"; message: string; code?: string }
-  | { type: "rooms"; rooms: { name: string; members: number }[] }
+  | { type: "rooms"; rooms: RoomInfo }
   | { type: "roomJoined"; room: string; members: number }
   | { type: "roomLeft"; room: string };
 

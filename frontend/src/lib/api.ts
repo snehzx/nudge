@@ -23,7 +23,15 @@ api.interceptors.response.use(
   async (error) => {
     // failure-this runs
     const original = error.config;
-    if (error.response?.status !== 401 || original._retired) {
+    // auth endpoints themselves must never trigger a refresh-and-retry:
+    // - /auth/refresh failing IS the refresh call, retrying it would await its own promise forever
+    // - /auth/signin or /auth/signup returning 401 means bad credentials, not an expired
+    //   access token, so "refreshing" and retrying just replaces the real error message
+    if (
+      error.response?.status !== 401 ||
+      original._retired ||
+      /\/auth\/(refresh|signin|signup)$/.test(original.url ?? "")
+    ) {
       return Promise.reject(error);
     }
     original._retired = true;

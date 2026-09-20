@@ -24,5 +24,5 @@ export function verifyAccessToken(token: string): accessPayload {
 }
 
 export function verifyRefreshToken(token: string): accessPayload {
-  return jwt.verify(token, JWT_ACCESS_SECRET) as accessPayload;
+  return jwt.verify(token, JWT_REFRESH_SECRET) as accessPayload;
 }

@@ -6,7 +6,8 @@
   "private": true,
   "workspaces": [
     "backend",
-    "shared"
+    "shared",
+    "frontend"
   ],
   "scripts": {
     "dev:server": "npm run dev -w backend",

@@ -43,7 +43,7 @@ export const useChatStore = create<chatState>((set, get) => ({
     intentionalCLose = false;
     set({ status: "connecing" });
 
-    ws = new WebSocket(`${import.meta.env.VITE_WS_URL}?token=${token} `); // brower built in
+    ws = new WebSocket(`${import.meta.env.VITE_WS_URL}?token=${token}`); // brower built in
     ws.onopen = () => {
       retryDelay = 500;
       set({ status: "open", error: null }); // this is what makes the ui change nothing tells react anything happened

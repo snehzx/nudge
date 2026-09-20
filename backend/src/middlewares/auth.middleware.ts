@@ -9,7 +9,7 @@ export function authMiddleware(
 ) {
   const token = req.headers.authorization?.slice(7);
   if (!token) {
-    return new apiError(401, "invalid token");
+    return next(new apiError(401, "invalid token"));
   }
   try {
     req.user = verifyAccessToken(token);
