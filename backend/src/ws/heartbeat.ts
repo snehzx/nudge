@@ -6,7 +6,7 @@ export function startHeartbeat(wss: WebSocketServer) {
   const timer = setInterval(() => {
     for (const [ws, state] of clients) {
       if (!state.isAlive) {
-        console.log(`${state.id} failed heartbeat - terminating`);
+        console.log(`${state.userId} failed heartbeat - terminating`);
         ws.terminate();
         continue;
       }

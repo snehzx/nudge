@@ -1,43 +1,21 @@
-export type StoredMsg = {
-  id: string;
-  from: string;
-  text: string;
-  time: number;
-  room: string;
-};
+import type { accessPayload } from "../utils/jwt.ts";
+export * from "@chat/shared";
 
-export type CLientMsg =
-  | { type: "join"; name: string }
-  | { type: "chat"; room: string; text: string }
-  | { type: "ping" }
-  | { type: "joinRoom"; room: string }
-  | { type: "leaveRoom"; room: string }
-  | { type: "listRooms" };
-
-export type ServerMessage =
-  | { type: "welcome"; id: string }
-  | { type: "joined"; name: string; online: number }
-  | { type: "history"; room: string; messages: StoredMsg[] }
-  | { type: "system"; room: string; text: string }
-  | {
-      type: "chat";
-      id: string;
-      room: string;
-      from: string;
-      text: string;
-      time: number;
+declare global {
+  namespace Express {
+    interface Request {
+      user?: accessPayload;
     }
-  | { type: "error"; message: string; code?: string }
-  | { type: "pong"; time: number }
-  | { type: "rooms"; rooms: { name: string; members: number }[] }
-  | { type: "roomJoined"; room: string; members: number }
-  | { type: "roomLeft"; room: string };
+  }
+}
 
 export type ClientState = {
-  id: string;
-  name: string | null;
+  userId: string;
+  username: string | null;
   rooms: Set<string>;
   isAlive: boolean;
   tokens: number;
   lastRefill: number;
 };
+
+export {};

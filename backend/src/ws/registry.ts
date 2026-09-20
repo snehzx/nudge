@@ -66,12 +66,12 @@ export function roomList() {
 
 export function onlineCount() {
   let n = 0;
-  for (const s of clients.values()) if (s.name) n++;
+  for (const s of clients.values()) if (s.username) n++;
   return n;
 }
 
 export function isNameTaken(name: string) {
   return [...clients.values()].some(
-    (s) => s.name?.toLowerCase() === name.toLowerCase(),
+    (s) => s.username?.toLowerCase() === name.toLowerCase(),
   );
 }

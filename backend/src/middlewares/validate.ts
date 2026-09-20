@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
-import { z } from "zod/v3";
+import { z } from "zod";
 import { apiError } from "../utils/apiError";
 
 export const validate =
@@ -17,6 +17,7 @@ export const validate =
       }));
       return next(new apiError(422, "validation failed", errors));
     }
-    req.body = result.data.body ?? req.body;
+    const data = result.data as { body?: unknown };
+    if (data.body !== undefined) req.body = data.body;
     next();
   };

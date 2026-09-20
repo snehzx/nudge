@@ -4,9 +4,9 @@ import mongoose, { Schema } from "mongoose";
 const msgSchema = new Schema(
   {
     from: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "User",
       required: true,
-      trim: true,
     },
     text: {
       type: String,

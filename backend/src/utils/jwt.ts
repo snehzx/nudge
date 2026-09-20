@@ -19,7 +19,10 @@ export function signRefreshToken(payload: { sub: string }) {
     expiresIn: REFRESH_TOKEN_TTL as SignOptions["expiresIn"],
   });
 }
-
 export function verifyAccessToken(token: string): accessPayload {
+  return jwt.verify(token, JWT_ACCESS_SECRET) as accessPayload;
+}
+
+export function verifyRefreshToken(token: string): accessPayload {
   return jwt.verify(token, JWT_ACCESS_SECRET) as accessPayload;
 }
