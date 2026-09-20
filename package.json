@@ -1,0 +1,27 @@
+{
+  "name": "chat-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "shared"
+  ],
+  "scripts": {
+    "dev:server": "npm run dev -w backend",
+    "dev:client": "npm run dev -w frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snehzx/nudge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/snehzx/nudge/issues"
+  },
+  "homepage": "https://github.com/snehzx/nudge#readme"
+}
